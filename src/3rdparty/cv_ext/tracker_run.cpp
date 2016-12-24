@@ -135,28 +135,6 @@ bool TrackerRun::init()
     if (_paras.showOutput)
         namedWindow(_windowTitle.c_str());
 
-    if (!_paras.outputFilePath.empty())
-    {
-        _resultsFile.open(_paras.outputFilePath.c_str());
-
-        if (!_resultsFile.is_open())
-        {
-            std::cerr << "Error: Unable to create results file: "
-                << _paras.outputFilePath.c_str()
-                << std::endl;
-
-            return false;
-        }
-
-        _resultsFile.precision(std::numeric_limits<double>::digits10 - 4);
-    }
-
-    if (_paras.initBb.width > 0 || _paras.initBb.height > 0)
-    {
-        _boundingBox = _paras.initBb;
-        _hasInitBox = true;
-    }
-
     _isPaused = _paras.paused;
     _frameIdx = 0;
     return true;
@@ -190,6 +168,8 @@ bool TrackerRun::update()
     int64 tStart = 0;
     int64 tDuration = 0;
 
+
+    //STEP1 import new image
     if (!_isPaused || _frameIdx == 0 || _isStep)
     {
         _cap >> _image;
@@ -200,6 +180,7 @@ bool TrackerRun::update()
         ++_frameIdx;
     }
 
+    //STEP2 if not initialized, do initialization, else update
     if (!_isTrackerInitialzed)
     {
         if (!_hasInitBox)
@@ -244,6 +225,8 @@ bool TrackerRun::update()
 
             std::cout << "UpdateAt_: " << _boundingBox << std::endl;
             tStart = getTickCount();
+
+            //STEP 3 according to the current image and bbox, update target.
             _targetOnFrame = _tracker->updateAt(_image, _boundingBox);
             tDuration = getTickCount() - tStart;
 

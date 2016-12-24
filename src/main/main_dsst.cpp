@@ -43,6 +43,7 @@ public:
 
     void play()
     {
+        _paras.sequencePath = "/home/i/code_base/dsst_tracking/sample/sample_sequence_compressed/sample_sequence_compressed.avi";
         start();
         return;
     }
