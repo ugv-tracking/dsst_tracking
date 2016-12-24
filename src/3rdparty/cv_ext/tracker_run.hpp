@@ -76,6 +76,17 @@ struct Parameters{
     bool paused;
     bool repeat;
     bool isMockSequence;
+
+    Parameters ()
+    {
+        sequencePath = "/home/i/code_base/ACC_CAR/dsst_tracking/sample/sample_sequence_compressed/sample_sequence_compressed.avi";
+        device = -1;
+        startFrame = 0;
+        showOutput = 1;
+        paused = 0;
+        repeat = 0;
+        isMockSequence = 0;
+    }
 };
 
 class TrackerRun
@@ -83,23 +94,24 @@ class TrackerRun
 public:
     TrackerRun(std::string windowTitle);
     virtual ~TrackerRun();
-    bool start(int argc, const char** argv);
+    bool start();
     void setTrackerDebug(cf_tracking::TrackerDebug* debug);
 
 private:
-    Parameters parseCmdArgs(int argc, const char** argv);
+    Parameters parseCmdArgs();
     bool init();
     bool run();
     bool update();
     void printResults(const cv::Rect_<double>& boundingBox, bool isConfident, double fps);
 
-protected:
+public:
+    virtual cf_tracking::CfTracker* parseTrackerParas(TCLAP::CmdLine& cmd) = 0;
     virtual cf_tracking::CfTracker* parseTrackerParas(TCLAP::CmdLine& cmd, int argc, const char** argv) = 0;
+    Parameters _paras;
+    cf_tracking::CfTracker* _tracker;
 private:
     cv::Mat _image;
-    cf_tracking::CfTracker* _tracker;
     std::string _windowTitle;
-    Parameters _paras;
     cv::Rect_<double> _boundingBox;
     ImageAcquisition _cap;
     std::ofstream _resultsFile;
