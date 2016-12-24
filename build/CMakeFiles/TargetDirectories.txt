@@ -1,0 +1,2 @@
+/home/i/code_base/ACC_CAR/dsst_tracking/build/CMakeFiles/DSSTcpp.dir
+/home/i/code_base/ACC_CAR/dsst_tracking/build/CMakeFiles/KCFcpp.dir
