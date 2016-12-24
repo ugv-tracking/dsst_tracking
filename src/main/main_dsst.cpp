@@ -29,10 +29,13 @@
 // the use of this software, even if advised of the possibility of such damage.
 */
 
+#include <pybind11/pybind11.h>
 #include <tclap/CmdLine.h>
 #include <iostream>
 #include "dsst_tracker.hpp"
 #include "tracker_run.hpp"
+
+namespace py = pybind11;
 
 class DsstTrackerRun : public TrackerRun
 {
@@ -128,12 +131,53 @@ private:
     cf_tracking::DsstDebug<cf_tracking::DsstTracker::T> _debug;
 };
 
-int main(int argc, const char** argv)
-{
-    DsstTrackerRun mainObj;
+class Pet {
+public:
+    Pet(const std::string &name, const std::string &species)
+        : m_name(name), m_species(species) {
+        std::cout << "funny" << std::endl;
+    }
+    std::string name() const { return m_name; }
+    std::string species() const { return m_species; }
+private:
+    std::string m_name;
+    std::string m_species;
+};
 
-    if (!mainObj.start(argc, argv))
-        return -1;
+class Dog : public Pet {
+public:
+    Dog(const std::string &name) : Pet(name, "dog") {}
+    std::string bark() const { return "Woof!"; }
+};
 
-    return 0;
+class Rabbit : public Pet {
+public:
+    Rabbit(const std::string &name) : Pet(name, "parrot") {}
+};
+
+class Hamster : public Pet {
+public:
+    Hamster(const std::string &name) : Pet(name, "rodent") {}
+};
+
+PYBIND11_PLUGIN(DSST) {
+    py::module m("DSST", "DSST plugin");
+
+    py::class_<Pet> pet_class(m, "Pet");
+    pet_class
+        .def(py::init<std::string, std::string>())
+        .def("name", &Pet::name)
+        .def("species", &Pet::species);
+
+    /* One way of declaring a subclass relationship: reference parent's class_ object */
+    py::class_<Dog>(m, "Dog", pet_class)
+        .def(py::init<std::string>())
+        .def("bark", &Dog::bark);
+
+    /* Another way of declaring a subclass relationship: reference parent's C++ type */
+    py::class_<Rabbit>(m, "Rabbit", pet_class)
+        .def(py::init<std::string>());
+
+    return m.ptr();
 }
+
