@@ -21,15 +21,18 @@ SET(CMAKE_TARGET_LINKED_INFO_FILES
 
 # The include file search paths:
 SET(CMAKE_C_TARGET_INCLUDE_PATH
+  "/home/i/.conan/data/pybind11/1.4/memsharded/stable/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/include"
+  "../src/cf_libs/kcf"
+  "../src/cf_libs/dsst"
+  "../src/cf_libs/common"
+  "/usr/include/python2.7"
+  "../pybind11/include"
   "/usr/local/share/OpenCV/include"
   "../src/3rdparty/tclap"
   "../src/3rdparty/cv_ext"
   "../src/3rdparty/piotr"
   "../src/3rdparty/piotr/src"
   "../src/main"
-  "../src/cf_libs/kcf"
-  "../src/cf_libs/dsst"
-  "../src/cf_libs/common"
   "/usr/local/include/opencv"
   "/usr/local/include"
   )

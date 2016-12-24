@@ -102,38 +102,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named DSSTcpp
+# Target rules for targets named DSST
 
 # Build rule for target.
-DSSTcpp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 DSSTcpp
-.PHONY : DSSTcpp
+DSST: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 DSST
+.PHONY : DSST
 
 # fast build rule for target.
-DSSTcpp/fast:
-	$(MAKE) -f CMakeFiles/DSSTcpp.dir/build.make CMakeFiles/DSSTcpp.dir/build
-.PHONY : DSSTcpp/fast
-
-#=============================================================================
-# Target rules for targets named KCFcpp
-
-# Build rule for target.
-KCFcpp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 KCFcpp
-.PHONY : KCFcpp
-
-# fast build rule for target.
-KCFcpp/fast:
-	$(MAKE) -f CMakeFiles/KCFcpp.dir/build.make CMakeFiles/KCFcpp.dir/build
-.PHONY : KCFcpp/fast
+DSST/fast:
+	$(MAKE) -f CMakeFiles/DSST.dir/build.make CMakeFiles/DSST.dir/build
+.PHONY : DSST/fast
 
 src/3rdparty/cv_ext/init_box_selector.o: src/3rdparty/cv_ext/init_box_selector.cpp.o
 .PHONY : src/3rdparty/cv_ext/init_box_selector.o
 
 # target to build an object file
 src/3rdparty/cv_ext/init_box_selector.cpp.o:
-	$(MAKE) -f CMakeFiles/DSSTcpp.dir/build.make CMakeFiles/DSSTcpp.dir/src/3rdparty/cv_ext/init_box_selector.cpp.o
-	$(MAKE) -f CMakeFiles/KCFcpp.dir/build.make CMakeFiles/KCFcpp.dir/src/3rdparty/cv_ext/init_box_selector.cpp.o
+	$(MAKE) -f CMakeFiles/DSST.dir/build.make CMakeFiles/DSST.dir/src/3rdparty/cv_ext/init_box_selector.cpp.o
 .PHONY : src/3rdparty/cv_ext/init_box_selector.cpp.o
 
 src/3rdparty/cv_ext/init_box_selector.i: src/3rdparty/cv_ext/init_box_selector.cpp.i
@@ -141,8 +127,7 @@ src/3rdparty/cv_ext/init_box_selector.i: src/3rdparty/cv_ext/init_box_selector.c
 
 # target to preprocess a source file
 src/3rdparty/cv_ext/init_box_selector.cpp.i:
-	$(MAKE) -f CMakeFiles/DSSTcpp.dir/build.make CMakeFiles/DSSTcpp.dir/src/3rdparty/cv_ext/init_box_selector.cpp.i
-	$(MAKE) -f CMakeFiles/KCFcpp.dir/build.make CMakeFiles/KCFcpp.dir/src/3rdparty/cv_ext/init_box_selector.cpp.i
+	$(MAKE) -f CMakeFiles/DSST.dir/build.make CMakeFiles/DSST.dir/src/3rdparty/cv_ext/init_box_selector.cpp.i
 .PHONY : src/3rdparty/cv_ext/init_box_selector.cpp.i
 
 src/3rdparty/cv_ext/init_box_selector.s: src/3rdparty/cv_ext/init_box_selector.cpp.s
@@ -150,8 +135,7 @@ src/3rdparty/cv_ext/init_box_selector.s: src/3rdparty/cv_ext/init_box_selector.c
 
 # target to generate assembly for a file
 src/3rdparty/cv_ext/init_box_selector.cpp.s:
-	$(MAKE) -f CMakeFiles/DSSTcpp.dir/build.make CMakeFiles/DSSTcpp.dir/src/3rdparty/cv_ext/init_box_selector.cpp.s
-	$(MAKE) -f CMakeFiles/KCFcpp.dir/build.make CMakeFiles/KCFcpp.dir/src/3rdparty/cv_ext/init_box_selector.cpp.s
+	$(MAKE) -f CMakeFiles/DSST.dir/build.make CMakeFiles/DSST.dir/src/3rdparty/cv_ext/init_box_selector.cpp.s
 .PHONY : src/3rdparty/cv_ext/init_box_selector.cpp.s
 
 src/3rdparty/cv_ext/math_spectrums.o: src/3rdparty/cv_ext/math_spectrums.cpp.o
@@ -159,8 +143,7 @@ src/3rdparty/cv_ext/math_spectrums.o: src/3rdparty/cv_ext/math_spectrums.cpp.o
 
 # target to build an object file
 src/3rdparty/cv_ext/math_spectrums.cpp.o:
-	$(MAKE) -f CMakeFiles/DSSTcpp.dir/build.make CMakeFiles/DSSTcpp.dir/src/3rdparty/cv_ext/math_spectrums.cpp.o
-	$(MAKE) -f CMakeFiles/KCFcpp.dir/build.make CMakeFiles/KCFcpp.dir/src/3rdparty/cv_ext/math_spectrums.cpp.o
+	$(MAKE) -f CMakeFiles/DSST.dir/build.make CMakeFiles/DSST.dir/src/3rdparty/cv_ext/math_spectrums.cpp.o
 .PHONY : src/3rdparty/cv_ext/math_spectrums.cpp.o
 
 src/3rdparty/cv_ext/math_spectrums.i: src/3rdparty/cv_ext/math_spectrums.cpp.i
@@ -168,8 +151,7 @@ src/3rdparty/cv_ext/math_spectrums.i: src/3rdparty/cv_ext/math_spectrums.cpp.i
 
 # target to preprocess a source file
 src/3rdparty/cv_ext/math_spectrums.cpp.i:
-	$(MAKE) -f CMakeFiles/DSSTcpp.dir/build.make CMakeFiles/DSSTcpp.dir/src/3rdparty/cv_ext/math_spectrums.cpp.i
-	$(MAKE) -f CMakeFiles/KCFcpp.dir/build.make CMakeFiles/KCFcpp.dir/src/3rdparty/cv_ext/math_spectrums.cpp.i
+	$(MAKE) -f CMakeFiles/DSST.dir/build.make CMakeFiles/DSST.dir/src/3rdparty/cv_ext/math_spectrums.cpp.i
 .PHONY : src/3rdparty/cv_ext/math_spectrums.cpp.i
 
 src/3rdparty/cv_ext/math_spectrums.s: src/3rdparty/cv_ext/math_spectrums.cpp.s
@@ -177,8 +159,7 @@ src/3rdparty/cv_ext/math_spectrums.s: src/3rdparty/cv_ext/math_spectrums.cpp.s
 
 # target to generate assembly for a file
 src/3rdparty/cv_ext/math_spectrums.cpp.s:
-	$(MAKE) -f CMakeFiles/DSSTcpp.dir/build.make CMakeFiles/DSSTcpp.dir/src/3rdparty/cv_ext/math_spectrums.cpp.s
-	$(MAKE) -f CMakeFiles/KCFcpp.dir/build.make CMakeFiles/KCFcpp.dir/src/3rdparty/cv_ext/math_spectrums.cpp.s
+	$(MAKE) -f CMakeFiles/DSST.dir/build.make CMakeFiles/DSST.dir/src/3rdparty/cv_ext/math_spectrums.cpp.s
 .PHONY : src/3rdparty/cv_ext/math_spectrums.cpp.s
 
 src/3rdparty/cv_ext/shift.o: src/3rdparty/cv_ext/shift.cpp.o
@@ -186,8 +167,7 @@ src/3rdparty/cv_ext/shift.o: src/3rdparty/cv_ext/shift.cpp.o
 
 # target to build an object file
 src/3rdparty/cv_ext/shift.cpp.o:
-	$(MAKE) -f CMakeFiles/DSSTcpp.dir/build.make CMakeFiles/DSSTcpp.dir/src/3rdparty/cv_ext/shift.cpp.o
-	$(MAKE) -f CMakeFiles/KCFcpp.dir/build.make CMakeFiles/KCFcpp.dir/src/3rdparty/cv_ext/shift.cpp.o
+	$(MAKE) -f CMakeFiles/DSST.dir/build.make CMakeFiles/DSST.dir/src/3rdparty/cv_ext/shift.cpp.o
 .PHONY : src/3rdparty/cv_ext/shift.cpp.o
 
 src/3rdparty/cv_ext/shift.i: src/3rdparty/cv_ext/shift.cpp.i
@@ -195,8 +175,7 @@ src/3rdparty/cv_ext/shift.i: src/3rdparty/cv_ext/shift.cpp.i
 
 # target to preprocess a source file
 src/3rdparty/cv_ext/shift.cpp.i:
-	$(MAKE) -f CMakeFiles/DSSTcpp.dir/build.make CMakeFiles/DSSTcpp.dir/src/3rdparty/cv_ext/shift.cpp.i
-	$(MAKE) -f CMakeFiles/KCFcpp.dir/build.make CMakeFiles/KCFcpp.dir/src/3rdparty/cv_ext/shift.cpp.i
+	$(MAKE) -f CMakeFiles/DSST.dir/build.make CMakeFiles/DSST.dir/src/3rdparty/cv_ext/shift.cpp.i
 .PHONY : src/3rdparty/cv_ext/shift.cpp.i
 
 src/3rdparty/cv_ext/shift.s: src/3rdparty/cv_ext/shift.cpp.s
@@ -204,8 +183,7 @@ src/3rdparty/cv_ext/shift.s: src/3rdparty/cv_ext/shift.cpp.s
 
 # target to generate assembly for a file
 src/3rdparty/cv_ext/shift.cpp.s:
-	$(MAKE) -f CMakeFiles/DSSTcpp.dir/build.make CMakeFiles/DSSTcpp.dir/src/3rdparty/cv_ext/shift.cpp.s
-	$(MAKE) -f CMakeFiles/KCFcpp.dir/build.make CMakeFiles/KCFcpp.dir/src/3rdparty/cv_ext/shift.cpp.s
+	$(MAKE) -f CMakeFiles/DSST.dir/build.make CMakeFiles/DSST.dir/src/3rdparty/cv_ext/shift.cpp.s
 .PHONY : src/3rdparty/cv_ext/shift.cpp.s
 
 src/3rdparty/cv_ext/tracker_run.o: src/3rdparty/cv_ext/tracker_run.cpp.o
@@ -213,8 +191,7 @@ src/3rdparty/cv_ext/tracker_run.o: src/3rdparty/cv_ext/tracker_run.cpp.o
 
 # target to build an object file
 src/3rdparty/cv_ext/tracker_run.cpp.o:
-	$(MAKE) -f CMakeFiles/DSSTcpp.dir/build.make CMakeFiles/DSSTcpp.dir/src/3rdparty/cv_ext/tracker_run.cpp.o
-	$(MAKE) -f CMakeFiles/KCFcpp.dir/build.make CMakeFiles/KCFcpp.dir/src/3rdparty/cv_ext/tracker_run.cpp.o
+	$(MAKE) -f CMakeFiles/DSST.dir/build.make CMakeFiles/DSST.dir/src/3rdparty/cv_ext/tracker_run.cpp.o
 .PHONY : src/3rdparty/cv_ext/tracker_run.cpp.o
 
 src/3rdparty/cv_ext/tracker_run.i: src/3rdparty/cv_ext/tracker_run.cpp.i
@@ -222,8 +199,7 @@ src/3rdparty/cv_ext/tracker_run.i: src/3rdparty/cv_ext/tracker_run.cpp.i
 
 # target to preprocess a source file
 src/3rdparty/cv_ext/tracker_run.cpp.i:
-	$(MAKE) -f CMakeFiles/DSSTcpp.dir/build.make CMakeFiles/DSSTcpp.dir/src/3rdparty/cv_ext/tracker_run.cpp.i
-	$(MAKE) -f CMakeFiles/KCFcpp.dir/build.make CMakeFiles/KCFcpp.dir/src/3rdparty/cv_ext/tracker_run.cpp.i
+	$(MAKE) -f CMakeFiles/DSST.dir/build.make CMakeFiles/DSST.dir/src/3rdparty/cv_ext/tracker_run.cpp.i
 .PHONY : src/3rdparty/cv_ext/tracker_run.cpp.i
 
 src/3rdparty/cv_ext/tracker_run.s: src/3rdparty/cv_ext/tracker_run.cpp.s
@@ -231,8 +207,7 @@ src/3rdparty/cv_ext/tracker_run.s: src/3rdparty/cv_ext/tracker_run.cpp.s
 
 # target to generate assembly for a file
 src/3rdparty/cv_ext/tracker_run.cpp.s:
-	$(MAKE) -f CMakeFiles/DSSTcpp.dir/build.make CMakeFiles/DSSTcpp.dir/src/3rdparty/cv_ext/tracker_run.cpp.s
-	$(MAKE) -f CMakeFiles/KCFcpp.dir/build.make CMakeFiles/KCFcpp.dir/src/3rdparty/cv_ext/tracker_run.cpp.s
+	$(MAKE) -f CMakeFiles/DSST.dir/build.make CMakeFiles/DSST.dir/src/3rdparty/cv_ext/tracker_run.cpp.s
 .PHONY : src/3rdparty/cv_ext/tracker_run.cpp.s
 
 src/3rdparty/piotr/src/gradientMex.o: src/3rdparty/piotr/src/gradientMex.cpp.o
@@ -240,8 +215,7 @@ src/3rdparty/piotr/src/gradientMex.o: src/3rdparty/piotr/src/gradientMex.cpp.o
 
 # target to build an object file
 src/3rdparty/piotr/src/gradientMex.cpp.o:
-	$(MAKE) -f CMakeFiles/DSSTcpp.dir/build.make CMakeFiles/DSSTcpp.dir/src/3rdparty/piotr/src/gradientMex.cpp.o
-	$(MAKE) -f CMakeFiles/KCFcpp.dir/build.make CMakeFiles/KCFcpp.dir/src/3rdparty/piotr/src/gradientMex.cpp.o
+	$(MAKE) -f CMakeFiles/DSST.dir/build.make CMakeFiles/DSST.dir/src/3rdparty/piotr/src/gradientMex.cpp.o
 .PHONY : src/3rdparty/piotr/src/gradientMex.cpp.o
 
 src/3rdparty/piotr/src/gradientMex.i: src/3rdparty/piotr/src/gradientMex.cpp.i
@@ -249,8 +223,7 @@ src/3rdparty/piotr/src/gradientMex.i: src/3rdparty/piotr/src/gradientMex.cpp.i
 
 # target to preprocess a source file
 src/3rdparty/piotr/src/gradientMex.cpp.i:
-	$(MAKE) -f CMakeFiles/DSSTcpp.dir/build.make CMakeFiles/DSSTcpp.dir/src/3rdparty/piotr/src/gradientMex.cpp.i
-	$(MAKE) -f CMakeFiles/KCFcpp.dir/build.make CMakeFiles/KCFcpp.dir/src/3rdparty/piotr/src/gradientMex.cpp.i
+	$(MAKE) -f CMakeFiles/DSST.dir/build.make CMakeFiles/DSST.dir/src/3rdparty/piotr/src/gradientMex.cpp.i
 .PHONY : src/3rdparty/piotr/src/gradientMex.cpp.i
 
 src/3rdparty/piotr/src/gradientMex.s: src/3rdparty/piotr/src/gradientMex.cpp.s
@@ -258,8 +231,7 @@ src/3rdparty/piotr/src/gradientMex.s: src/3rdparty/piotr/src/gradientMex.cpp.s
 
 # target to generate assembly for a file
 src/3rdparty/piotr/src/gradientMex.cpp.s:
-	$(MAKE) -f CMakeFiles/DSSTcpp.dir/build.make CMakeFiles/DSSTcpp.dir/src/3rdparty/piotr/src/gradientMex.cpp.s
-	$(MAKE) -f CMakeFiles/KCFcpp.dir/build.make CMakeFiles/KCFcpp.dir/src/3rdparty/piotr/src/gradientMex.cpp.s
+	$(MAKE) -f CMakeFiles/DSST.dir/build.make CMakeFiles/DSST.dir/src/3rdparty/piotr/src/gradientMex.cpp.s
 .PHONY : src/3rdparty/piotr/src/gradientMex.cpp.s
 
 src/cf_libs/common/math_helper.o: src/cf_libs/common/math_helper.cpp.o
@@ -267,8 +239,7 @@ src/cf_libs/common/math_helper.o: src/cf_libs/common/math_helper.cpp.o
 
 # target to build an object file
 src/cf_libs/common/math_helper.cpp.o:
-	$(MAKE) -f CMakeFiles/DSSTcpp.dir/build.make CMakeFiles/DSSTcpp.dir/src/cf_libs/common/math_helper.cpp.o
-	$(MAKE) -f CMakeFiles/KCFcpp.dir/build.make CMakeFiles/KCFcpp.dir/src/cf_libs/common/math_helper.cpp.o
+	$(MAKE) -f CMakeFiles/DSST.dir/build.make CMakeFiles/DSST.dir/src/cf_libs/common/math_helper.cpp.o
 .PHONY : src/cf_libs/common/math_helper.cpp.o
 
 src/cf_libs/common/math_helper.i: src/cf_libs/common/math_helper.cpp.i
@@ -276,8 +247,7 @@ src/cf_libs/common/math_helper.i: src/cf_libs/common/math_helper.cpp.i
 
 # target to preprocess a source file
 src/cf_libs/common/math_helper.cpp.i:
-	$(MAKE) -f CMakeFiles/DSSTcpp.dir/build.make CMakeFiles/DSSTcpp.dir/src/cf_libs/common/math_helper.cpp.i
-	$(MAKE) -f CMakeFiles/KCFcpp.dir/build.make CMakeFiles/KCFcpp.dir/src/cf_libs/common/math_helper.cpp.i
+	$(MAKE) -f CMakeFiles/DSST.dir/build.make CMakeFiles/DSST.dir/src/cf_libs/common/math_helper.cpp.i
 .PHONY : src/cf_libs/common/math_helper.cpp.i
 
 src/cf_libs/common/math_helper.s: src/cf_libs/common/math_helper.cpp.s
@@ -285,8 +255,7 @@ src/cf_libs/common/math_helper.s: src/cf_libs/common/math_helper.cpp.s
 
 # target to generate assembly for a file
 src/cf_libs/common/math_helper.cpp.s:
-	$(MAKE) -f CMakeFiles/DSSTcpp.dir/build.make CMakeFiles/DSSTcpp.dir/src/cf_libs/common/math_helper.cpp.s
-	$(MAKE) -f CMakeFiles/KCFcpp.dir/build.make CMakeFiles/KCFcpp.dir/src/cf_libs/common/math_helper.cpp.s
+	$(MAKE) -f CMakeFiles/DSST.dir/build.make CMakeFiles/DSST.dir/src/cf_libs/common/math_helper.cpp.s
 .PHONY : src/cf_libs/common/math_helper.cpp.s
 
 src/main/image_acquisition.o: src/main/image_acquisition.cpp.o
@@ -294,8 +263,7 @@ src/main/image_acquisition.o: src/main/image_acquisition.cpp.o
 
 # target to build an object file
 src/main/image_acquisition.cpp.o:
-	$(MAKE) -f CMakeFiles/DSSTcpp.dir/build.make CMakeFiles/DSSTcpp.dir/src/main/image_acquisition.cpp.o
-	$(MAKE) -f CMakeFiles/KCFcpp.dir/build.make CMakeFiles/KCFcpp.dir/src/main/image_acquisition.cpp.o
+	$(MAKE) -f CMakeFiles/DSST.dir/build.make CMakeFiles/DSST.dir/src/main/image_acquisition.cpp.o
 .PHONY : src/main/image_acquisition.cpp.o
 
 src/main/image_acquisition.i: src/main/image_acquisition.cpp.i
@@ -303,8 +271,7 @@ src/main/image_acquisition.i: src/main/image_acquisition.cpp.i
 
 # target to preprocess a source file
 src/main/image_acquisition.cpp.i:
-	$(MAKE) -f CMakeFiles/DSSTcpp.dir/build.make CMakeFiles/DSSTcpp.dir/src/main/image_acquisition.cpp.i
-	$(MAKE) -f CMakeFiles/KCFcpp.dir/build.make CMakeFiles/KCFcpp.dir/src/main/image_acquisition.cpp.i
+	$(MAKE) -f CMakeFiles/DSST.dir/build.make CMakeFiles/DSST.dir/src/main/image_acquisition.cpp.i
 .PHONY : src/main/image_acquisition.cpp.i
 
 src/main/image_acquisition.s: src/main/image_acquisition.cpp.s
@@ -312,8 +279,7 @@ src/main/image_acquisition.s: src/main/image_acquisition.cpp.s
 
 # target to generate assembly for a file
 src/main/image_acquisition.cpp.s:
-	$(MAKE) -f CMakeFiles/DSSTcpp.dir/build.make CMakeFiles/DSSTcpp.dir/src/main/image_acquisition.cpp.s
-	$(MAKE) -f CMakeFiles/KCFcpp.dir/build.make CMakeFiles/KCFcpp.dir/src/main/image_acquisition.cpp.s
+	$(MAKE) -f CMakeFiles/DSST.dir/build.make CMakeFiles/DSST.dir/src/main/image_acquisition.cpp.s
 .PHONY : src/main/image_acquisition.cpp.s
 
 src/main/main_dsst.o: src/main/main_dsst.cpp.o
@@ -321,7 +287,7 @@ src/main/main_dsst.o: src/main/main_dsst.cpp.o
 
 # target to build an object file
 src/main/main_dsst.cpp.o:
-	$(MAKE) -f CMakeFiles/DSSTcpp.dir/build.make CMakeFiles/DSSTcpp.dir/src/main/main_dsst.cpp.o
+	$(MAKE) -f CMakeFiles/DSST.dir/build.make CMakeFiles/DSST.dir/src/main/main_dsst.cpp.o
 .PHONY : src/main/main_dsst.cpp.o
 
 src/main/main_dsst.i: src/main/main_dsst.cpp.i
@@ -329,7 +295,7 @@ src/main/main_dsst.i: src/main/main_dsst.cpp.i
 
 # target to preprocess a source file
 src/main/main_dsst.cpp.i:
-	$(MAKE) -f CMakeFiles/DSSTcpp.dir/build.make CMakeFiles/DSSTcpp.dir/src/main/main_dsst.cpp.i
+	$(MAKE) -f CMakeFiles/DSST.dir/build.make CMakeFiles/DSST.dir/src/main/main_dsst.cpp.i
 .PHONY : src/main/main_dsst.cpp.i
 
 src/main/main_dsst.s: src/main/main_dsst.cpp.s
@@ -337,32 +303,8 @@ src/main/main_dsst.s: src/main/main_dsst.cpp.s
 
 # target to generate assembly for a file
 src/main/main_dsst.cpp.s:
-	$(MAKE) -f CMakeFiles/DSSTcpp.dir/build.make CMakeFiles/DSSTcpp.dir/src/main/main_dsst.cpp.s
+	$(MAKE) -f CMakeFiles/DSST.dir/build.make CMakeFiles/DSST.dir/src/main/main_dsst.cpp.s
 .PHONY : src/main/main_dsst.cpp.s
-
-src/main/main_kcf.o: src/main/main_kcf.cpp.o
-.PHONY : src/main/main_kcf.o
-
-# target to build an object file
-src/main/main_kcf.cpp.o:
-	$(MAKE) -f CMakeFiles/KCFcpp.dir/build.make CMakeFiles/KCFcpp.dir/src/main/main_kcf.cpp.o
-.PHONY : src/main/main_kcf.cpp.o
-
-src/main/main_kcf.i: src/main/main_kcf.cpp.i
-.PHONY : src/main/main_kcf.i
-
-# target to preprocess a source file
-src/main/main_kcf.cpp.i:
-	$(MAKE) -f CMakeFiles/KCFcpp.dir/build.make CMakeFiles/KCFcpp.dir/src/main/main_kcf.cpp.i
-.PHONY : src/main/main_kcf.cpp.i
-
-src/main/main_kcf.s: src/main/main_kcf.cpp.s
-.PHONY : src/main/main_kcf.s
-
-# target to generate assembly for a file
-src/main/main_kcf.cpp.s:
-	$(MAKE) -f CMakeFiles/KCFcpp.dir/build.make CMakeFiles/KCFcpp.dir/src/main/main_kcf.cpp.s
-.PHONY : src/main/main_kcf.cpp.s
 
 # Help Target
 help:
@@ -370,8 +312,7 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... DSSTcpp"
-	@echo "... KCFcpp"
+	@echo "... DSST"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... src/3rdparty/cv_ext/init_box_selector.o"
@@ -398,9 +339,6 @@ help:
 	@echo "... src/main/main_dsst.o"
 	@echo "... src/main/main_dsst.i"
 	@echo "... src/main/main_dsst.s"
-	@echo "... src/main/main_kcf.o"
-	@echo "... src/main/main_kcf.i"
-	@echo "... src/main/main_kcf.s"
 .PHONY : help
 
 
