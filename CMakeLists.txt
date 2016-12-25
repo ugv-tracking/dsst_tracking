@@ -16,7 +16,8 @@ set(CF_TCLAP_DIR "src/3rdparty/tclap")
 set(CF_CV_EXT_DIR "src/3rdparty/cv_ext")
 set(CF_PIOTR_DIR "src/3rdparty/piotr")
 
-include_directories(src/cf_libs/kcf
+include_directories(src/cv_bind
+                    src/cf_libs/kcf
                     src/cf_libs/dsst
                     src/cf_libs/common)
 
@@ -65,6 +66,15 @@ set(CF_MAIN_SOURCES
     ${CF_CV_EXT_DIR}/tracker_run.cpp
     ${CF_TCLAP_DIR}/tclap/CmdLine.h)
 
+add_library(cv_bind  SHARED
+    src/main/cv_bind.cpp
+    src/cv_bind/cv_bind2.h)
+target_link_libraries(cv_bind ${OpenCV_LIBS})
+set_target_properties(cv_bind PROPERTIES PREFIX "")
+set_target_properties(cv_bind PROPERTIES SUFFIX ".so")
+
+add_custom_command(TARGET cv_bind POST_BUILD COMMAND strip ${PROJECT_BINARY_DIR}/cv_bind.so)
+
 add_library(DSST  SHARED
     src/main/main_dsst.cpp
     src/cf_libs/dsst/dsst_debug.hpp
@@ -76,4 +86,3 @@ set_target_properties(DSST PROPERTIES PREFIX "")
 set_target_properties(DSST PROPERTIES SUFFIX ".so")
 
 add_custom_command(TARGET DSST POST_BUILD COMMAND strip ${PROJECT_BINARY_DIR}/DSST.so)
-
