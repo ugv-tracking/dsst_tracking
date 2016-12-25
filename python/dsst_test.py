@@ -10,7 +10,6 @@ import cv2
 import numpy as np
 from numpy import empty, nan
 from numpy import *
-from __future__ import print_function
 import pylab
 import scipy.misc
 from optparse import OptionParser

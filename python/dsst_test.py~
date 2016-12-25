@@ -152,3 +152,59 @@ dsst.setParam()
 
 #     ret, im = vid.read()
 #     dsst.update(im)
+
+while vid.isOpened():
+    ret, im = vid.read()
+    if not ret or im is None:
+        break
+  
+    im_compress = cv2.imencode('.jpg', im)[1]
+    encoded_string = base64.b64encode(im_compress)
+
+    payload = {'image_base64': encoded_string, 'image_name': ""}
+    h = im.shape[0]
+    w = im.shape[1]
+    
+    loop = time.time() - tic
+    
+    if  loop > 2:
+        tic = time.time()
+        
+        # drawing lines
+        rline = requests.post('http://10.128.8.10:8005/v1/analyzer/lane', data=json.dumps(payload))
+        result_line = json.loads(rline.text)
+        (frame, lane_triangle) = render(im, result_line, w)
+        
+        # drawing cars
+        rcar = requests.post('http://10.128.2.5:17001/v1/analyzer/objdetect', data=json.dumps(payload))
+        result_car = json.loads(rcar.text)
+        valid_, tl_, hw_ = drawing_objdet(result_car, frame, h, w, lane_triangle)
+        
+        # TODO initial DSST
+        if valid_ == True:
+            print('Find new target, reinit DSST')
+            im = frame
+            dsst.setBbox(tl_[0],tl_[1],hw_[0],hw_[1])
+            dsst.reinit(im)
+            Dsst_valid = True
+        else:
+            Dsst_valid = False
+    else:          
+        if Dsst_valid == True:
+            dsst.update(im)
+            
+#             Display Results
+#             if dsst.tFound == 1:
+    
+            _x = int(dsst.tFound.x)
+            _y = int(dsst.tFound.y)
+            _height = int(dsst.tFound.width)
+            _width  = int(dsst.tFound.height)
+            cv2.line(im, (_x, _y), (_x + _width, _y), (255, 0, 0), 4)
+            cv2.line(im, (_x, _y), (_x , _y + _height), (255, 0, 0), 4)
+            cv2.line(im, (_x, _y + _height), (_x + _width, _y + _height), (255, 0, 0), 4)
+            cv2.line(im, (_x + _width, _y + _height), (_x + _width, _y), (255, 0, 0), 4)
+
+    cv2.imshow('image', im)
+    cv2.waitKey(1)
+
