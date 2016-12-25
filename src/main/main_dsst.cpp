@@ -40,7 +40,7 @@ namespace py = pybind11;
 class DsstTrackerRun : public TrackerRun
 {
 public:
-
+    Parameters param;
     void play()
     {
         start();
@@ -85,7 +85,7 @@ public:
 
         //! set Paras for data play
         {
-            Parameters param;
+            param.sequencePath = "/home/i/code_base/ACC_CAR/dsst_tracking/test.avi";
             _paras = param;
         }
 
