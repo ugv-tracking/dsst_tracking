@@ -1,34 +1,3 @@
-/*
-// License Agreement (3-clause BSD License)
-// Copyright (c) 2015, Klaus Haag, all rights reserved.
-// Third party copyrights and patents are property of their respective owners.
-//
-// Redistribution and use in source and binary forms, with or without modification,
-// are permitted provided that the following conditions are met:
-//
-// * Redistributions of source code must retain the above copyright notice,
-//   this list of conditions and the following disclaimer.
-//
-// * Redistributions in binary form must reproduce the above copyright notice,
-//   this list of conditions and the following disclaimer in the documentation
-//   and/or other materials provided with the distribution.
-//
-// * Neither the names of the copyright holders nor the names of the contributors
-//   may be used to endorse or promote products derived from this software
-//   without specific prior written permission.
-//
-// This software is provided by the copyright holders and contributors "as is" and
-// any express or implied warranties, including, but not limited to, the implied
-// warranties of merchantability and fitness for a particular purpose are disclaimed.
-// In no event shall copyright holders or contributors be liable for any direct,
-// indirect, incidental, special, exemplary, or consequential damages
-// (including, but not limited to, procurement of substitute goods or services;
-// loss of use, data, or profits; or business interruption) however caused
-// and on any theory of liability, whether in contract, strict liability,
-// or tort (including negligence or otherwise) arising in any way out of
-// the use of this software, even if advised of the possibility of such damage.
-*/
-
 #include <pybind11/pybind11.h>
 #include <tclap/CmdLine.h>
 #include <iostream>
@@ -54,66 +23,48 @@ public:
     Parameters param;
     TargetFound tFound;
 
-    void play(cv::Mat img)
+    void setBbox(int x, int y, int height, int width)
+    {
+        tFound.x      = x;
+        tFound.y      = y;
+        tFound.height = height;
+        tFound.width  = width;
+        return;
+    }
+
+    void reinit(cv::Mat &img)
+   {
+        _boundingBox.x      = tFound.x;
+        _boundingBox.y      = tFound.y;
+        _boundingBox.height = tFound.height;
+        _boundingBox.width  = tFound.width;
+
+        _image              = img;
+        _targetOnFrame      = _tracker->reinit(_image, _boundingBox);
+    }
+
+    void update(cv::Mat &img)
     {
         //STEP1 import new image
         _image = img;
-        std::cout << img.cols << " " << img.rows << std::endl;
+        _targetOnFrame      = _tracker->update(_image, _boundingBox);
+        tFound.found        = _targetOnFrame;
+        tFound.x            = _boundingBox.x;
+        tFound.y            = _boundingBox.y;
+        tFound.height       = _boundingBox.height;
+        tFound.width        = _boundingBox.width;
 
-
-        //STEP2 if not initialized, do initialization, else update
-        if (!_isTrackerInitialzed)
-        {
-            if (!_hasInitBox)
-            {
-                Rect box;
-                if (!InitBoxSelector::selectBox(_image, box))
-                    return;
-
-                _boundingBox = Rect_<double>(static_cast<double>(box.x),
-                    static_cast<double>(box.y),
-                    static_cast<double>(box.width),
-                    static_cast<double>(box.height));
-                _hasInitBox = true;
-            }
-            _targetOnFrame = _tracker->reinit(_image, _boundingBox);
-            if (_targetOnFrame)
-                _isTrackerInitialzed = true;
-        }
+        static int frame = 0;
+        std::cout << "===========================================" << std::endl;
+        if(tFound.found)
+            std::cout << "Target found in frame " << frame <<  std::endl;
         else
-        {
-            _isStep = false;
-            _targetOnFrame = _tracker->update(_image, _boundingBox);
-        }
+            std::cout << "Target not found in frame " << frame <<  std::endl;
+        std::cout << "x " << tFound.x << " y " << tFound.y << " height " << tFound.height << " width " << tFound.width << std::endl;
+        std::cout << "===========================================" << std::endl << std::endl;
 
-        //STEP3 output result
-        {
-            Mat hudImage;
-            _image.copyTo(hudImage);
-            rectangle(hudImage, _boundingBox, Scalar(0, 0, 255), 2);
-            Point_<double> center;
-            center.x = _boundingBox.x + _boundingBox.width / 2;
-            center.y = _boundingBox.y + _boundingBox.height / 2;
-            circle(hudImage, center, 3, Scalar(0, 0, 255), 2);
-
-            if (!_targetOnFrame)
-            {
-                cv::Point_<double> tl = _boundingBox.tl();
-                cv::Point_<double> br = _boundingBox.br();
-
-                line(hudImage, tl, br, Scalar(0, 0, 255));
-                line(hudImage, cv::Point_<double>(tl.x, br.y),
-                    cv::Point_<double>(br.x, tl.y), Scalar(0, 0, 255));
-            }
-
-            imshow(_windowTitle.c_str(), hudImage);
-
-            tFound.found = _targetOnFrame;
-            tFound.x = _boundingBox.x;
-            tFound.y = _boundingBox.y;
-            tFound.height = _boundingBox.height;
-            tFound.width  = _boundingBox.width;
-        }
+        frame++;
+        return;
     }
 
     DsstTrackerRun() : TrackerRun("DSSTcpp")
@@ -158,18 +109,7 @@ public:
             _paras = param;
         }
 
-        //! set opecv
-        _windowTitle = "Dsst Tracking";
-        namedWindow(_windowTitle.c_str());
-
         return;
-    }
-
-
-    void show_image(cv::Mat image)
-    {
-        cv::imshow("image_from_Cpp", image);
-        cv::waitKey(0);
     }
 
     cv::Mat read_image(std::string image_name)
@@ -242,12 +182,13 @@ PYBIND11_PLUGIN(DSST) {
             .def_readonly("tFound",&DsstTrackerRun::tFound)
             .def("read_image", &DsstTrackerRun::read_image, "A function that read an image",
                 py::arg("image"))
-            .def("show_image", &DsstTrackerRun::show_image, "A function that show an image",
-                py::arg("image"));
+            .def("setBbox", &DsstTrackerRun::setBbox);
 
     py::class_<Tracker> (m, "Tracker", dsst_class)
             .def(py::init<>())
-            .def("play", &Tracker::play, "A function that read image from Tusimple",
+            .def("update", &Tracker::update, "A function that update read image from Tusimple",
+                 py::arg("image"))
+            .def("reinit", &Tracker::reinit, "A function that reinit read image from Tusimple",
                  py::arg("image"));
 
     return m.ptr();
