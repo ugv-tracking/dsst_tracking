@@ -13,7 +13,7 @@ using namespace cv;
 struct TargetFound
 {
     bool found;
-    double x, y, height, width;
+    int x, y, height, width;
 };
 
 
