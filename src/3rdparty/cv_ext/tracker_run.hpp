@@ -109,7 +109,6 @@ public:
     virtual cf_tracking::CfTracker* parseTrackerParas(TCLAP::CmdLine& cmd, int argc, const char** argv) = 0;
     Parameters _paras;
     cf_tracking::CfTracker* _tracker;
-private:
     cv::Mat _image;
     std::string _windowTitle;
     cv::Rect_<double> _boundingBox;
