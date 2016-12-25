@@ -34,18 +34,83 @@
 #include <iostream>
 #include "dsst_tracker.hpp"
 #include "tracker_run.hpp"
+#include "init_box_selector.hpp"
+#include "cf_tracker.hpp"
 
 namespace py = pybind11;
+using namespace cv;
+
+struct TargetFound
+{
+    bool found;
+    double x, y, height, width;
+};
+
 
 class DsstTrackerRun : public TrackerRun
 {
 public:
+    Parameters param;
+    TargetFound tFound;
 
-    void play()
+    void play(cv::Mat &img)
     {
-        _paras.sequencePath = "/home/i/code_base/dsst_tracking/sample/sample_sequence_compressed/sample_sequence_compressed.avi";
-        start();
-        return;
+        //STEP1 import new image
+        _image = img;
+
+        //STEP2 if not initialized, do initialization, else update
+        if (!_isTrackerInitialzed)
+        {
+            if (!_hasInitBox)
+            {
+                Rect box;
+                if (!InitBoxSelector::selectBox(_image, box))
+                    return;
+
+                _boundingBox = Rect_<double>(static_cast<double>(box.x),
+                    static_cast<double>(box.y),
+                    static_cast<double>(box.width),
+                    static_cast<double>(box.height));
+                _hasInitBox = true;
+            }
+            _targetOnFrame = _tracker->reinit(_image, _boundingBox);
+            if (_targetOnFrame)
+                _isTrackerInitialzed = true;
+        }
+        else
+        {
+            _isStep = false;
+            _targetOnFrame = _tracker->update(_image, _boundingBox);
+        }
+
+        //STEP3 output result
+        {
+            Mat hudImage;
+            _image.copyTo(hudImage);
+            rectangle(hudImage, _boundingBox, Scalar(0, 0, 255), 2);
+            Point_<double> center;
+            center.x = _boundingBox.x + _boundingBox.width / 2;
+            center.y = _boundingBox.y + _boundingBox.height / 2;
+            circle(hudImage, center, 3, Scalar(0, 0, 255), 2);
+
+            if (!_targetOnFrame)
+            {
+                cv::Point_<double> tl = _boundingBox.tl();
+                cv::Point_<double> br = _boundingBox.br();
+
+                line(hudImage, tl, br, Scalar(0, 0, 255));
+                line(hudImage, cv::Point_<double>(tl.x, br.y),
+                    cv::Point_<double>(br.x, tl.y), Scalar(0, 0, 255));
+            }
+
+            imshow(_windowTitle.c_str(), hudImage);
+
+            tFound.found = _targetOnFrame;
+            tFound.x = _boundingBox.x;
+            tFound.y = _boundingBox.y;
+            tFound.height = _boundingBox.height;
+            tFound.width  = _boundingBox.width;
+        }
     }
 
     DsstTrackerRun() : TrackerRun("DSSTcpp")
@@ -86,9 +151,13 @@ public:
 
         //! set Paras for data play
         {
-            Parameters param;
+            param.sequencePath = "/home/i/code_base/dsst_tracking/sample/sample_sequence_compressed/sample_sequence_compressed.avi";
             _paras = param;
         }
+
+        //! set opecv
+        _windowTitle = "Dsst Tracking";
+        namedWindow(_windowTitle.c_str());
 
         return;
     }
@@ -126,6 +195,14 @@ public:
 PYBIND11_PLUGIN(DSST) {
     py::module m("DSST", "DSST plugin");
 
+    py::class_<TargetFound> targetfound(m, "TargetFound");
+    targetfound
+            .def_readonly("found", &TargetFound::found)
+            .def_readonly("x", &TargetFound::x)
+            .def_readonly("y", &TargetFound::y)
+            .def_readonly("height", &TargetFound::height)
+            .def_readonly("width", &TargetFound::width);
+
     py::class_<Parameters> params (m, "Parameters");
     params
             .def(py::init<>())
@@ -144,13 +221,14 @@ PYBIND11_PLUGIN(DSST) {
 
     py::class_<DsstTrackerRun> dsst_class(m, "DsstTrackerRun");
     dsst_class
-            .def("setParam", &DsstTrackerRun::setParam);
+            .def("setParam", &DsstTrackerRun::setParam)
+            .def_readwrite("param", &DsstTrackerRun::param)
+            .def_readonly("tFound",&DsstTrackerRun::tFound);
 
     py::class_<Tracker> (m, "Tracker", dsst_class)
             .def(py::init<>())
             .def("start", &Tracker::start)
-            .def("play", &Tracker::play)
-            .def_readwrite("param", &Tracker::_paras);
+            .def("play", &Tracker::play);
 
     return m.ptr();
 }

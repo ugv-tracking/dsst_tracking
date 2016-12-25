@@ -106,31 +106,6 @@ bool TrackerRun::start()
 
 bool TrackerRun::init()
 {
-    ImgAcqParas imgAcqParas;
-    imgAcqParas.device = _paras.device;
-    imgAcqParas.expansionStr = _paras.expansion;
-    imgAcqParas.isMock = _paras.isMockSequence;
-    imgAcqParas.sequencePath = _paras.sequencePath;
-    _cap.open(imgAcqParas);
-
-    if (!_cap.isOpened())
-    {
-        cerr << "Could not open device/sequence/video!" << endl;
-        exit(-1);
-    }
-
-    int startIdx = _paras.startFrame - 1;
-
-    // HACKFIX:
-    //_cap.set(CV_CAP_PROP_POS_FRAMES, startIdx);
-    // OpenCV's _cap.set in combination with image sequences is
-    // currently bugged on Linux
-    // TODO: review when OpenCV 3.0 is stable
-    cv::Mat temp;
-
-    for (int i = 0; i < startIdx; ++i)
-        _cap >> temp;
-    // HACKFIX END
 
     if (_paras.showOutput)
         namedWindow(_windowTitle.c_str());
