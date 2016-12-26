@@ -1,10 +1,10 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 2.8)
 project(CfTracking)
 #ADD_DEFINITIONS ( -std=c++11 )
 SET(CMAKE_CXX_FLAGS "-std=c++11 -Wall -O3 -fPIC")
 
 find_package(OpenCV 3 REQUIRED) 
-find_package(PythonLibs 2.7 EXACT REQUIRED)
+find_package(PythonLibs 2.7 REQUIRED)
 
 include_directories(${PYTHON_INCLUDE_DIRS})
 include_directories(${OpenCV_INCLUDE_DIRS}) 
