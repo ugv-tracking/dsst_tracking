@@ -3,6 +3,7 @@ Python Warp for DSST tracking
 
 ## Basic useage
 '''
+
 import sys
 sys.path.append("build")
 import DSST
@@ -11,12 +12,14 @@ padding = 2.5
 
 dsst = DSST.Tracker()
 dsst.setParam(padding)
+
 '''
 
 For other params, please refer to the funciton setParam in file main_dsst.cpp, and change it as your will.
 Currnt parameter setting:
 '''
-void setParam(double padding)
+
+    void setParam(double padding)
     {
         cf_tracking::DsstParameters tracker;
         //! set Paras for cf_tracking
@@ -54,5 +57,6 @@ void setParam(double padding)
 
         return;
     }
+
 '''
 
