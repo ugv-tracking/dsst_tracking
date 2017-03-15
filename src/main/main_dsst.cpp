@@ -73,7 +73,7 @@ public:
     virtual ~DsstTrackerRun()
     {}
 
-    void setParam()
+    void setParam(double padding)
     {
         cf_tracking::DsstParameters tracker;
         //! set Paras for cf_tracking
@@ -81,7 +81,7 @@ public:
         // Danelljan, Martin, et al., "Accurate scale estimation for robust visual tracking," in Proc. BMVC, 2014
         {
 
-            tracker.padding = static_cast<double>(1);
+            tracker.padding = static_cast<double>(padding);
             tracker.outputSigmaFactor = static_cast<double>(1.0 / 16.0);
             tracker.lambda = static_cast<double>(0.01);
             tracker.learningRate = static_cast<double>(0.025);
