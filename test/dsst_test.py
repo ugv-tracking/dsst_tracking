@@ -115,7 +115,7 @@ def render(frame, result, w):
 
     return frame, tup1 + tup2
 
-vid = cv2.VideoCapture("../../output_5min.mp4")
+vid = cv2.VideoCapture("../test.avi")
 
 tic = time.time()
 # tracking pram
@@ -138,8 +138,9 @@ response = None
 # input DSST
 sys.path.append("../build")
 import DSST
+padding = 2.5
 dsst = DSST.Tracker()
-dsst.setParam()
+dsst.setParam(padding)
 
 # initialization for dsst
 

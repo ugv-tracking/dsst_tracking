@@ -1,4 +1,3 @@
-
 #include <pybind11/numpy.h>
 #include <opencv2/core/core.hpp>
 #include <stdexcept>
@@ -12,14 +11,14 @@ template <> struct type_caster<cv::Mat> {
          * function signatures and declares a local variable
          * 'value' of type inty
          */
-        PYBIND11_TYPE_CASTER(cv::Mat, _("numpy.ndarray"));
+        PYBIND11_TYPE_CASTER(cv::Mat,_("numpy.ndarray"));
 
         /**
          * Conversion part 1 (Python->C++): convert a PyObject into a inty
          * instance or return false upon failure. The second argument
          * indicates whether implicit conversions should be applied.
          */
-        bool load(handle src, bool) 
+        bool load(handle src, bool)
         {
             if (!isinstance<array>(src))
                 return false;
@@ -27,7 +26,7 @@ template <> struct type_caster<cv::Mat> {
 
             int ndims = arr.ndim();
 
-            decltype(CV_32F) dtype_cv; 
+            decltype(CV_32F) dtype_cv;
 
             // const auto &api = npy_api::get();
             // if (api.PyArray_EquivTypes_(arr.dtype(), dtype::of<float>())) {
@@ -43,18 +42,18 @@ template <> struct type_caster<cv::Mat> {
                 } else {
                     dtype_cv = CV_64FC1;
                 }
-            } else if (arr.dtype() == dtype(format_descriptor<unsigned char>::format())) { 
+            } else if (arr.dtype() == dtype(format_descriptor<unsigned char>::format())) {
                 if (ndims == 3) {
                     dtype_cv = CV_8UC3;
                 } else {
                     dtype_cv = CV_8UC1;
                 }
-            } else { 
+            } else {
                 throw std::logic_error("Unsupported type");
                 return false;
             }
 
-            const size_t* shape = arr.shape();
+            const ssize_t* shape = arr.shape();
 
             value = cv::Mat(cv::Size(shape[1], shape[0]), dtype_cv, arr.mutable_data(), cv::Mat::AUTO_STEP);
             return true;
@@ -67,33 +66,33 @@ template <> struct type_caster<cv::Mat> {
          * ``return_value_policy::reference_internal``) and are generally
          * ignored by implicit casters.
          */
-        static handle cast(const cv::Mat &m, return_value_policy, handle defval) 
+        static handle cast(const cv::Mat &m, return_value_policy, handle defval)
         {
             std::string format = format_descriptor<unsigned char>::format();
             size_t elemsize = sizeof(unsigned char);
-            int dim; 
+            int dim;
             switch(m.type()) {
-                case CV_8U: 
+                case CV_8U:
                     format = format_descriptor<unsigned char>::format();
                     elemsize = sizeof(unsigned char);
                     dim = 2;
-                    break; 
-                case CV_8UC3: 
+                    break;
+                case CV_8UC3:
                     format = format_descriptor<unsigned char>::format();
                     elemsize = sizeof(unsigned char);
                     dim = 3;
-                    break; 
-                case CV_32F: 
-                    format = format_descriptor<float>::format(); 
+                    break;
+                case CV_32F:
+                    format = format_descriptor<float>::format();
                     elemsize = sizeof(float);
                     dim = 2;
                     break;
-                case CV_64F: 
+                case CV_64F:
                     format = format_descriptor<double>::format();
                     elemsize = sizeof(double);
                     dim = 2;
                     break;
-                default: 
+                default:
                     throw std::logic_error("Unsupported type");
             }
 

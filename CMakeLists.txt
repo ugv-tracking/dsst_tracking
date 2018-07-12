@@ -3,11 +3,11 @@ project(CfTracking)
 #ADD_DEFINITIONS ( -std=c++11 )
 SET(CMAKE_CXX_FLAGS "-std=c++11 -Wall -O3 -fPIC")
 
-find_package(OpenCV 3 REQUIRED) 
+find_package(OpenCV 3 REQUIRED)
 find_package(PythonLibs 2.7 EXACT REQUIRED)
 
 include_directories(${PYTHON_INCLUDE_DIRS})
-include_directories(${OpenCV_INCLUDE_DIRS}) 
+include_directories(${OpenCV_INCLUDE_DIRS})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 
@@ -18,14 +18,15 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 #find_package(PythonLibs REQUIRED)
 #find_package(OpenCV REQUIRED)
 
-
-
 # add 3rdparty source
+add_subdirectory(pybind11)
+
 set(CF_TCLAP_DIR "src/3rdparty/tclap")
 set(CF_CV_EXT_DIR "src/3rdparty/cv_ext")
 set(CF_PIOTR_DIR "src/3rdparty/piotr")
 
 include_directories(
+                    pybind11/include
                     src/cf_libs/kcf
                     src/cf_libs/dsst
                     src/cf_libs/common)
@@ -33,7 +34,7 @@ include_directories(
 
 include_directories(
     ${PYTHON_INCLUDE_DIR}
-    ${PROJECT_SOURCE_DIR}/pybind11/include
+    #${PROJECT_SOURCE_DIR}/pybind11/include
     ${OpenCV_DIR}/include
     ${CF_TCLAP_DIR}
     ${CF_CV_EXT_DIR}
