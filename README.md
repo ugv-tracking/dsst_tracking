@@ -1,9 +1,14 @@
-# dsst_tracking
-Python Warp for DSST tracking
+# Python Warp for DSST tracking
 
-## Basic useage
-'''
+## Build
+```
+mkdir build
+cd build
+cmake ..
+```
 
+## Testing
+```
 import sys
 sys.path.append("build")
 import DSST
@@ -12,9 +17,9 @@ padding = 2.5
 
 dsst = DSST.Tracker()
 dsst.setParam(padding)
+```
 
-'''
-
+## Detail
 For other params, please refer to the funciton setParam in file main_dsst.cpp, and change it as your will.
 Currnt parameter setting:
 '''
