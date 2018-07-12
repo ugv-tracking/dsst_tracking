@@ -105,7 +105,7 @@ public:
 
         //! set Paras for data play
         {
-            param.sequencePath = "/home/i/code_base/ACC_CAR/dsst_tracking/test.avi";
+            param.sequencePath = "video_path";
             _paras = param;
         }
 

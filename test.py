@@ -55,7 +55,7 @@ def drawing_objdet(res, drawing_board, _h, _w, lane_triangle):
                 cl = color[0]
             elif _type == 'BICYCLE':
                 cl = color[2]
-            
+
             if isintersect(lane_triangle, (_x1, _y1, _x2, _y2), _h):
                 if _y2 > maxy:
                     maxy = _y2
@@ -68,7 +68,7 @@ def drawing_objdet(res, drawing_board, _h, _w, lane_triangle):
     else:
         bbox = np.array([0,0,0,0])
         valid = False
-    
+
     tl = bbox[:2]
     hw = bbox[2:4]
     return valid, tl, hw
@@ -90,7 +90,7 @@ def render(frame, result, w):
     if 'response' in result and result['response'] is not None:
         response = response_visualization(result['response'])
         frame = cv2.addWeighted(frame, .7, response, .3, 0)
-        
+
     left_bound = 0
     right_bound = w
     tup1 = ()
@@ -108,21 +108,19 @@ def render(frame, result, w):
     if 'pleft' in dir():
         cv2.line(frame, p1, pleft, color = (0, 255, 0), thickness = 2)
         tup1 = p1 + (pleft[0], )
-        
+
     if 'pright' in dir():
         cv2.line(frame, p1, pright, color = (0, 255, 0), thickness = 2)
         tup2 = (pright[0], )
 
     return frame, tup1 + tup2
 
-vid = cv2.VideoCapture("../test.avi")
-
 tic = time.time()
 # tracking pram
-padding = 1.0 
+padding = 1.0
 output_sigma_factor = 1 / float(16)
-sigma = 0.2 
-lambda_value = 1e-2 
+sigma = 0.2
+lambda_value = 1e-2
 interpolation_factor = 0.075
 Dsst_valid = False
 
@@ -136,11 +134,12 @@ alphaf = None
 response = None
 
 # input DSST
-sys.path.append("../build")
+sys.path.append("build")
 import DSST
 padding = 2.5
 dsst = DSST.Tracker()
 dsst.setParam(padding)
+vid = cv2.VideoCapture("test.avi")
 
 # initialization for dsst
 
@@ -157,29 +156,29 @@ while vid.isOpened():
     ret, im = vid.read()
     if not ret or im is None:
         break
-  
+
     im_compress = cv2.imencode('.jpg', im)[1]
     encoded_string = base64.b64encode(im_compress)
 
     payload = {'image_base64': encoded_string, 'image_name': ""}
     h = im.shape[0]
     w = im.shape[1]
-    
+
     loop = time.time() - tic
-    
+
     if  loop > 2:
         tic = time.time()
-        
+
         # drawing lines
         rline = requests.post('http://10.128.8.10:8005/v1/analyzer/lane', data=json.dumps(payload))
         result_line = json.loads(rline.text)
         (frame, lane_triangle) = render(im, result_line, w)
-        
+
         # drawing cars
         rcar = requests.post('http://10.128.2.5:17001/v1/analyzer/objdetect', data=json.dumps(payload))
         result_car = json.loads(rcar.text)
         valid_, tl_, hw_ = drawing_objdet(result_car, frame, h, w, lane_triangle)
-        
+
         # TODO initial DSST
         if valid_ == True:
             print('Find new target, reinit DSST')
@@ -189,13 +188,13 @@ while vid.isOpened():
             Dsst_valid = True
         else:
             Dsst_valid = False
-    else:          
+    else:
         if Dsst_valid == True:
             dsst.update(im)
-            
+
 #             Display Results
 #             if dsst.tFound == 1:
-    
+
             _x = int(dsst.tFound.x)
             _y = int(dsst.tFound.y)
             _height = int(dsst.tFound.width)

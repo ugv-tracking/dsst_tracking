@@ -8,15 +8,29 @@ cmake ..
 ```
 
 ## Testing
+test dsst
+```
+python test.py
+```
+
+detail in test.py
 ```
 import sys
+import cv2
 sys.path.append("build")
 import DSST
 
+# set dsst padding
 padding = 2.5
 
+# set tracker
 dsst = DSST.Tracker()
 dsst.setParam(padding)
+
+# set video
+vid = cv2.VideoCapture("../test.avi")
+...
+
 ```
 
 ## Detail
